@@ -1,0 +1,45 @@
+From a4820dff98e91dfea0027254b196c82050aca510 Mon Sep 17 00:00:00 2001
+From: Angelillo15 <contact@angelillo15.es>
+Date: Thu, 18 Jul 2024 00:14:14 +0200
+Subject: [PATCH] Add directory size route
+
+
+diff --git a/router/router.go b/router/router.go
+index d748e27b..fbeb9e03 100644
+--- a/router/router.go
++++ b/router/router.go
+@@ -88,6 +88,7 @@ func Configure(m *wserver.Manager, client remote.Client) *gin.Engine {
+ 		{
+ 			files.GET("/contents", getServerFileContents)
+ 			files.GET("/list-directory", getServerListDirectory)
++			files.GET("/directory-size", getServerDirectorySize)
+ 			files.PUT("/rename", putServerRenameFiles)
+ 			files.POST("/copy", postServerCopyFile)
+ 			files.POST("/write", postServerWriteFile)
+diff --git a/router/router_server_files.go b/router/router_server_files.go
+index 09ad8cd1..ef5569a9 100644
+--- a/router/router_server_files.go
++++ b/router/router_server_files.go
+@@ -85,6 +85,19 @@ func getServerListDirectory(c *gin.Context) {
+ 	}
+ }
+ 
++// Returns the contents of a directory for a server.
++func getServerDirectorySize(c *gin.Context) {
++	s := ExtractServer(c)
++	dir := c.Query("directory")
++	if size, err := s.Filesystem().DirectorySize(dir); err != nil {
++		middleware.CaptureAndAbort(c, err)
++	} else {
++		c.JSON(http.StatusOK, gin.H{
++			"size": size,
++		})
++	}
++}
++
+ type renameFile struct {
+ 	To   string `json:"to"`
+ 	From string `json:"from"`
+-- 
+2.34.1
+

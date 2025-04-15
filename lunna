@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    "rb" | "rbp" | "rebuild")
+        scripts/rebuildPatches.sh || exit 1
+    ;;
+    "p" | "patch")
+        scripts/build.sh || exit 1
+    ;;
+    "b" | "build")
+        scripts/build.sh --pkg || exit 1
+    ;;
+    "changeBranch" | "cb")
+        scripts/changeBranch.sh $2 || exit 1
+    ;;
+    *)
+        echo "Lunna's wings build tool command. This provides a variety of commands to control Lunna's Theme wings"
+        echo "build. View below for details of the available commands."
+        echo ""
+        echo "Commands:"
+        echo "  * rb, rbp, rebuild  | Rebuilds the patches"
+        echo "  * p, patch          | Applies all the patches to BungeeCord"
+        echo "  * changeBranch, cb  | Utility to aid in merging upstream, needs a branch name as an argument"
+        echo "  * b, build          | Builds the project"
+        echo "                      | The bootstrap artifact can be found in Waterfall-Proxy/bootstrap/target/"
+    ;;
+esac
