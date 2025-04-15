@@ -19,9 +19,9 @@ case "$1" in
         echo ""
         echo "Commands:"
         echo "  * rb, rbp, rebuild  | Rebuilds the patches"
-        echo "  * p, patch          | Applies all the patches to BungeeCord"
+        echo "  * p, patch          | Applies all the patches to Wings"
         echo "  * changeBranch, cb  | Utility to aid in merging upstream, needs a branch name as an argument"
         echo "  * b, build          | Builds the project"
-        echo "                      | The bootstrap artifact can be found in Waterfall-Proxy/bootstrap/target/"
+        echo "                      | The bootstrap artifact can be found in wings-dev/wings"
     ;;
 esac
